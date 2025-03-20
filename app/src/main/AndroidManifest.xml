@@ -13,6 +13,18 @@
             android:theme="@style/Theme.CalCount"
             tools:targetApi="31">
         <activity
+                android:name=".OverviewPage"
+                android:exported="false"/>
+        <activity
+                android:name=".CustomFoodsActivity"
+                android:exported="false"/>
+        <activity
+                android:name=".DailyHistoryPage"
+                android:exported="false"/>
+        <activity
+                android:name=".SettingsPage"
+                android:exported="false"/>
+        <activity
                 android:name=".MainActivity"
                 android:exported="true">
             <intent-filter>
