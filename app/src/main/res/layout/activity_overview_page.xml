@@ -8,4 +8,26 @@
         android:layout_height="match_parent"
         tools:context=".OverviewPage">
 
+    <Button
+            android:text="@string/app_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/button"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="32dp" android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp" android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            android:clickable="false" android:backgroundTint="#000000"/>
+
+    <Button
+            android:text="Daily History"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/button2"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintEnd_toStartOf="@+id/button3" app:layout_constraintTop_toBottomOf="@+id/button"
+            android:layout_marginTop="24dp" android:layout_marginEnd="16dp" android:layout_marginStart="24dp"/>
+    <Button
+            android:text="Settings"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/button3" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button2" app:layout_constraintTop_toBottomOf="@+id/button"
+            android:layout_marginTop="24dp" android:layout_marginEnd="24dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
