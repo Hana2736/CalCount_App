@@ -5,8 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
-    android:backgroundTint="#000000"
+    android:background="#1F2023"
+    android:backgroundTint="#1F2023"
     tools:context=".CustomFoodsActivity">
 
     <Button
@@ -20,7 +20,7 @@
         android:clickable="false"
         android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        android:textColor="#000000"
+        android:textColor="#201749"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
