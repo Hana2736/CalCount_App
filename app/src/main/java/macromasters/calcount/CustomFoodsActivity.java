@@ -24,16 +24,20 @@ public class CustomFoodsActivity extends AppCompatActivity {
     // Meal type selections
     private Spinner mealTypeSpinner;
     private String[] mealType = {"MEAL", "SNACK", "DRINK"};
+    private String selectedMealType;
 
     // Day selections
     private Spinner selectDaySpinner;
     private String[] selectDay = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+    private String selectedDay;
 
-    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+
+        // Initialize DataContainer
+        DataContainer.setup();
 
         // Set status bar and navigation bar to transparent
         getWindow().setStatusBarColor(Color.TRANSPARENT);
@@ -42,7 +46,6 @@ public class CustomFoodsActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_custom_foods);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            // Apply system window insets to the main view
             v.setPadding(0, insets.getInsets(WindowInsetsCompat.Type.systemBars()).top, 0,
                     insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom);
             return insets;
@@ -80,10 +83,11 @@ public class CustomFoodsActivity extends AppCompatActivity {
         mealTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedMeal = mealType[position];
+                selectedMealType = mealType[position];
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                selectedMealType = null;
             }
         });
 
@@ -100,10 +104,11 @@ public class CustomFoodsActivity extends AppCompatActivity {
         selectDaySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedDay = selectDay[position];
+                selectedDay = selectDay[position];
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                selectedDay = null;
             }
         });
 
@@ -116,32 +121,82 @@ public class CustomFoodsActivity extends AppCompatActivity {
             String caloriesText = caloriesEditText.getText().toString().trim();
 
             if (mealName.isEmpty() || caloriesText.isEmpty()) {
-                Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             int calorieAmount;
             try {
                 calorieAmount = Integer.parseInt(caloriesText);
+                if (calorieAmount < 0) {
+                    return;
+                }
             } catch (NumberFormatException e) {
-                Toast.makeText(this, "Invalid calorie amount", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            String mealType = mealTypeSpinner.getSelectedItem().toString();
-            String eatenDate = selectDaySpinner.getSelectedItem().toString();
+            if (selectedMealType == null) {
+                return;
+            }
 
+            if (selectedDay == null) {
+                return;
+            }
+
+            // Convert selectedMealType (String) to MealType enum
+            MealType mealTypeEnum;
+            switch (selectedMealType) {
+                case "MEAL":
+                    mealTypeEnum = MealType.MEAL;
+                    break;
+                case "SNACK":
+                    mealTypeEnum = MealType.SNACK;
+                    break;
+                case "DRINK":
+                    mealTypeEnum = MealType.DRINK;
+                    break;
+                default:
+                    return;
+            }
+
+            // Calculate LocalDateTime for the selected day (relative to today)
+            LocalDateTime now = LocalDateTime.now();
+            int daysToSubtract = 0;
+            String todayDay = now.getDayOfWeek().toString();
+            for (int i = 0; i < selectDay.length; i++) {
+                if (selectDay[i].equalsIgnoreCase(todayDay)) {
+                    daysToSubtract = (i - selectDay.length + 1) % 7;
+                    break;
+                }
+            }
+            for (int i = 0; i < selectDay.length; i++) {
+                if (selectDay[i].equals(selectedDay)) {
+                    daysToSubtract += i;
+                    break;
+                }
+            }
+            LocalDateTime eatenDate = now.minusDays(daysToSubtract);
+
+            // Create new FoodItem
             FoodItem newFood = new FoodItem();
             newFood.foodName = mealName;
             newFood.calories = calorieAmount;
-            newFood.mealType = mealType;
-            newFood.eatenDate = LocalDateTime.parse(eatenDate);
+            newFood.mealType = mealTypeEnum;
+            newFood.eatenDate = eatenDate;
 
-            DataContainer.customFoods.add(newFood);
-            DataContainer.SaveData(this);
+            // Add to customFoods and save
+            try {
+                DataContainer.customFoods.add(newFood);
+                DataContainer.SaveData(this);
+                Toast.makeText(this, "Food item added: " + mealName + " " + DataContainer.mealTypeToString(mealTypeEnum), Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                return;
+            }
 
-            Toast.makeText(this, "Food item added: " + mealName, Toast.LENGTH_SHORT).show();
-
-    })
-;}
+            // Clear the form
+            mealNameEditText.setText("");
+            caloriesEditText.setText("");
+            mealTypeSpinner.setSelection(0);
+            selectDaySpinner.setSelection(0);
+        });
+    }
 }

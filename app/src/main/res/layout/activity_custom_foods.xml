@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:background="#1F2023"
     android:backgroundTint="#1F2023"
-    tools:context=".CustomFoodsActivity">
+    tools:context=".CustomFoodsActivity"
+    tools:visibility="visible">
 
     <Button
         android:id="@+id/appHeader_overview"
@@ -67,7 +68,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <EditText
+<EditText
         android:id="@+id/Meal_Name"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
@@ -76,9 +77,11 @@
         android:layout_marginEnd="185dp"
         android:layout_marginBottom="16dp"
         android:ems="10"
+        android:hint="Meal Name"
+	android:textColorHint="#80FFFFFF"
         android:inputType="text"
-        android:text="Meal Name"
-        android:textColor="@color/white"
+        android:text=""
+        android:textColor="#FFFFFF" 
         app:layout_constraintBottom_toTopOf="@+id/Calorie_Amount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -89,13 +92,15 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginStart="17dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="185dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
         android:ems="10"
-        android:inputType="text"
-        android:text="Calorie Amount"
-        android:textColor="@color/white"
+        android:hint="Calorie Amount"
+	android:textColorHint="#80FFFFFF"
+        android:inputType="number"
+        android:text=""
+        android:textColor="#FFFFFF" 
         app:layout_constraintBottom_toTopOf="@+id/Meal_Type"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -151,6 +156,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Select_Day" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
-

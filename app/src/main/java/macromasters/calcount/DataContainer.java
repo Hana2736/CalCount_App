@@ -17,7 +17,6 @@ public class DataContainer {
         if (setupOnce) return;
         setupOnce = true;
         customFoods = new LinkedList<>();
-
     }
 
     public static void sort() {
@@ -38,27 +37,32 @@ public class DataContainer {
     }
 
     public static void SaveData(Context ctx) {
-        try (FileOutputStream fos = ctx.openFileOutput(SAVE_FILE_NAME, Context.MODE_PRIVATE); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+        try (FileOutputStream fos = ctx.openFileOutput(SAVE_FILE_NAME, Context.MODE_PRIVATE);
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(customFoods);
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static void LoadData(Context ctx) {
-        try (FileInputStream fis = ctx.openFileInput(SAVE_FILE_NAME); ObjectInputStream ois = new ObjectInputStream(fis)) {
+        try (FileInputStream fis = ctx.openFileInput(SAVE_FILE_NAME);
+             ObjectInputStream ois = new ObjectInputStream(fis)) {
             Object loadedObject = ois.readObject();
             if (loadedObject instanceof List) {
-                customFoods = (List<FoodItem>) loadedObject;
+                List<?> loadedList = (List<?>) loadedObject;
+                // Perform a runtime check to ensure the list contains FoodItem objects
+                if (!loadedList.isEmpty() && !(loadedList.get(0) instanceof FoodItem)) {
+                    throw new IOException("Loaded list does not contain FoodItem objects");
+                }
+                customFoods = (List<FoodItem>) loadedList;
                 sort();
             } else {
-                throw new IOException("Loading failed");
+                throw new IOException("Loaded object is not a List");
             }
-
         } catch (IOException | ClassNotFoundException e) {
             customFoods = new LinkedList<>();
         }
     }
 }
-
