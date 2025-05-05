@@ -1,6 +1,5 @@
 package macromasters.calcount;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -17,17 +17,19 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
+import java.time.LocalDateTime;
+
 public class CustomFoodsActivity extends AppCompatActivity {
 
     // Meal type selections
     private Spinner mealTypeSpinner;
-    private String[] mealTypes = {"Meal", "Snack"};
+    private String[] mealType = {"MEAL", "SNACK", "DRINK"};
 
     // Day selections
     private Spinner selectDaySpinner;
     private String[] selectDay = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
-    @SuppressLint("MissingInflatedId")
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +72,7 @@ public class CustomFoodsActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_spinner_item,
-                mealTypes
+                mealType
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mealTypeSpinner.setAdapter(adapter);
@@ -78,7 +80,7 @@ public class CustomFoodsActivity extends AppCompatActivity {
         mealTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedMeal = mealTypes[position];
+                String selectedMeal = mealType[position];
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -105,5 +107,41 @@ public class CustomFoodsActivity extends AppCompatActivity {
             }
         });
 
-    }
+        EditText mealNameEditText = findViewById(R.id.Meal_Name);
+        EditText caloriesEditText = findViewById(R.id.Calorie_Amount);
+        Button addFoodButton = findViewById(R.id.Submit_Button);
+
+        addFoodButton.setOnClickListener(v -> {
+            String mealName = mealNameEditText.getText().toString().trim();
+            String caloriesText = caloriesEditText.getText().toString().trim();
+
+            if (mealName.isEmpty() || caloriesText.isEmpty()) {
+                Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            int calorieAmount;
+            try {
+                calorieAmount = Integer.parseInt(caloriesText);
+            } catch (NumberFormatException e) {
+                Toast.makeText(this, "Invalid calorie amount", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String mealType = mealTypeSpinner.getSelectedItem().toString();
+            String eatenDate = selectDaySpinner.getSelectedItem().toString();
+
+            FoodItem newFood = new FoodItem();
+            newFood.foodName = mealName;
+            newFood.calories = calorieAmount;
+            newFood.mealType = mealType;
+            newFood.eatenDate = LocalDateTime.parse(eatenDate);
+
+            DataContainer.customFoods.add(newFood);
+            DataContainer.SaveData(this);
+
+            Toast.makeText(this, "Food item added: " + mealName, Toast.LENGTH_SHORT).show();
+
+    })
+;}
 }
