@@ -59,15 +59,27 @@ public class DailyHistoryPage extends AppCompatActivity {
             startActivity(intent);
         });
 
+        // Initial population of history
+        populateHistory();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateHistory();
+    }
+
+    private void populateHistory() {
+        // Clear existing views
+        LinearLayout historyLayout = findViewById(R.id.history_layout);
+        historyLayout.removeAllViews();
+
         // Sort the food items by date (newest first)
         DataContainer.sort();
 
-        // Get the LinearLayout to populate with daily history
-        LinearLayout historyLayout = findViewById(R.id.history_layout);
-
         // Group food items by day
         Map<String, List<FoodItem>> foodByDay = new HashMap<>();
-        DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("EEEE, dd MMM yyyy"); // e.g., "Monday, 30 Apr 2025"
+        DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("EEEE, dd MMM yyyy");
 
         for (FoodItem item : DataContainer.customFoods) {
             String dayKey = item.eatenDate.format(dayFormatter);
@@ -92,14 +104,12 @@ public class DailyHistoryPage extends AppCompatActivity {
             // Add food items for the day
             for (FoodItem food : foods) {
                 View foodView = inflater.inflate(R.layout.slice_single_food_item, historyLayout, false);
-
                 Button mealTypeIcon = foodView.findViewById(R.id.mealTypeIcon_slice);
                 Button mealDesc = foodView.findViewById(R.id.mealDesc_slice);
-
                 mealTypeIcon.setText(DataContainer.mealTypeToString(food.mealType));
                 mealDesc.setText(food.foodName + "\n" + food.calories + " cal");
-
                 historyLayout.addView(foodView);
+
             }
         }
     }

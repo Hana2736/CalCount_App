@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import java.io.File;
 
 public class SettingsPage extends AppCompatActivity {
 
@@ -82,14 +83,12 @@ public class SettingsPage extends AppCompatActivity {
 
     private void loadSettings() {
         boolean notificationsEnabled = sharedPreferences.getBoolean("notificationsEnabled", true);
-
         if (notificationsEnabled) {
             notificationsOn.setChecked(true);
         } else {
             notificationsOff.setChecked(true);
         }
         int savedGoal = sharedPreferences.getInt("calorieGoal", 2000);
-
         calorieGoalInput.setText(String.valueOf(savedGoal));
     }
 
@@ -128,10 +127,39 @@ public class SettingsPage extends AppCompatActivity {
     }
 
     private void eraseAllSettings() {
-        sharedPreferences.edit().clear().apply();
-        calorieGoalInput.setText("");
-        notificationsOn.setChecked(true);
-        Toast.makeText(this, "History erased", Toast.LENGTH_SHORT).show();
+        new AlertDialog.Builder(this)
+                .setTitle("Erase All Data")
+                .setMessage("Are you sure you want to erase all settings and food data? This cannot be undone.")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    try {
+                        // Clear SharedPreferences
+                        sharedPreferences.edit().clear().apply();
+
+                        // Delete savedata.bin file
+                        File file = new File(getFilesDir(), DataContainer.SAVE_FILE_NAME);
+                        if (file.exists()) {
+                            boolean deleted = file.delete();
+                            if (!deleted) {
+                                Toast.makeText(this, "Failed to delete food data file", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        }
+
+                        // Reset DataContainer's customFoods list
+                        DataContainer.customFoods.clear();
+
+                        // Reset UI elements
+                        calorieGoalInput.setText("");
+                        notificationsOn.setChecked(true);
+
+                        // Notify user
+                        Toast.makeText(this, "All settings and food data erased", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(this, "Error erasing data: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
     @Override

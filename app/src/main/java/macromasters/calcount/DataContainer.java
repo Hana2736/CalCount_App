@@ -1,7 +1,6 @@
 package macromasters.calcount;
 
 import android.content.Context;
-
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
@@ -52,7 +51,6 @@ public class DataContainer {
             Object loadedObject = ois.readObject();
             if (loadedObject instanceof List) {
                 List<?> loadedList = (List<?>) loadedObject;
-                // Perform a runtime check to ensure the list contains FoodItem objects
                 if (!loadedList.isEmpty() && !(loadedList.get(0) instanceof FoodItem)) {
                     throw new IOException("Loaded list does not contain FoodItem objects");
                 }
@@ -63,6 +61,14 @@ public class DataContainer {
             }
         } catch (IOException | ClassNotFoundException e) {
             customFoods = new LinkedList<>();
+        }
+    }
+
+    public static void clearData(Context ctx) {
+        customFoods.clear();
+        File file = new File(ctx.getFilesDir(), SAVE_FILE_NAME);
+        if (file.exists()) {
+            file.delete();
         }
     }
 }
