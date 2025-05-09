@@ -18,7 +18,10 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
 import java.time.LocalDateTime;
-
+/**
+ * Activity for users to add custom food items to their log.
+ * Users can specify the meal name, calorie amount, meal type, and the day it was eaten.
+ */
 public class CustomFoodsActivity extends AppCompatActivity {
 
     // Meal type selections
@@ -30,7 +33,15 @@ public class CustomFoodsActivity extends AppCompatActivity {
     private Spinner selectDaySpinner;
     private String[] selectDay = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
     private String selectedDay;
-
+    /**
+     * Called when the activity is first created.
+     * Initializes the UI elements, sets up spinners for meal type and day selection,
+     * and handles the logic for adding a new food item.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     * previously being shut down then this Bundle contains the data it most
+     * recently supplied in {@link #onSaveInstanceState}. Otherwise it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,12 +90,24 @@ public class CustomFoodsActivity extends AppCompatActivity {
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mealTypeSpinner.setAdapter(adapter);
-
         mealTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             * Callback method to be invoked when an item in this view has been
+             * selected.
+             * @param parent The AdapterView where the selection happened
+             * @param view The view within the AdapterView that was clicked
+             * @param position The position of the view in the adapter
+             * @param id The row id of the item that is selected
+             */
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedMealType = mealType[position];
             }
+            /**
+             * Callback method to be invoked when the selection disappears from this
+             * view.
+             * @param parent The AdapterView that now contains no selected item.
+             */
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 selectedMealType = null;
@@ -100,12 +123,24 @@ public class CustomFoodsActivity extends AppCompatActivity {
         );
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         selectDaySpinner.setAdapter(adapter2);
-
         selectDaySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             * Callback method to be invoked when an item in this view has been
+             * selected.
+             * @param parent The AdapterView where the selection happened
+             * @param view The view within the AdapterView that was clicked
+             * @param position The position of the view in the adapter
+             * @param id The row id of the item that is selected
+             */
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedDay = selectDay[position];
             }
+            /**
+             * Callback method to be invoked when the selection disappears from this
+             * view.
+             * @param parent The AdapterView that now contains no selected item.
+             */
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 selectedDay = null;

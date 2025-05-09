@@ -2,7 +2,7 @@ package macromasters.calcount;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+//import android.provider.ContactsContract; // Unused import
 import android.widget.Button;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,10 +10,25 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.time.LocalDateTime;
+//import java.time.LocalDateTime; // Unused import for example data
 
+/**
+ * The main entry point of the application.
+ * This activity provides navigation to other parts of the application
+ * such as Overview, Daily History, Custom Foods, and Settings.
+ * It also initializes and loads application data.
+ */
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * Called when the activity is first created.
+     * Initializes the UI, sets up navigation button listeners,
+     * initializes the data container, and loads any saved food history.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     * previously being shut down then this Bundle contains the data it most
+     * recently supplied in {@link #onSaveInstanceState}. Otherwise it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         //Load the saved food history from storage
         DataContainer.LoadData(this);
 
-       // DataContainer.SaveData(this);
+        // DataContainer.SaveData(this);
 
 
     }

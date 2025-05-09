@@ -19,8 +19,20 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Activity to display the daily history of food items logged by the user.
+ * Food items are grouped by day and displayed in a scrollable list.
+ */
 public class DailyHistoryPage extends AppCompatActivity {
 
+    /**
+     * Called when the activity is first created.
+     * Initializes the UI elements, sets up navigation buttons, and populates the history list.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     * previously being shut down then this Bundle contains the data it most
+     * recently supplied in {@link #onSaveInstanceState}. Otherwise it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,12 +75,22 @@ public class DailyHistoryPage extends AppCompatActivity {
         populateHistory();
     }
 
+    /**
+     * Called when the activity will start interacting with the user.
+     * At this point your activity is at the top of the activity stack,
+     * with user input going to it.
+     * Refreshes the history list.
+     */
     @Override
     protected void onResume() {
         super.onResume();
         populateHistory();
     }
 
+    /**
+     * Populates the history layout with food items.
+     * Food items are sorted by date, grouped by day, and displayed.
+     */
     private void populateHistory() {
         // Clear existing views
         LinearLayout historyLayout = findViewById(R.id.history_layout);
@@ -79,7 +101,7 @@ public class DailyHistoryPage extends AppCompatActivity {
 
         // Group food items by day
         Map<String, List<FoodItem>> foodByDay = new HashMap<>();
-        DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("EEEE, dd MMM yyyy");
+        DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("EEEE, dd MMM yy");
 
         for (FoodItem item : DataContainer.customFoods) {
             String dayKey = item.eatenDate.format(dayFormatter);
