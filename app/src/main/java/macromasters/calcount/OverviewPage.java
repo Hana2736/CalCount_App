@@ -65,6 +65,15 @@ public class OverviewPage extends AppCompatActivity {
             startActivity(intent);
         });
 
+
+        DataContainer.setup();
+
+
+        //Load the saved food history from storage
+        DataContainer.LoadData(this);
+
+
+
         DataContainer.sort();
 
         LinearLayout scrollList = findViewById(R.id.linearlayout_overview);

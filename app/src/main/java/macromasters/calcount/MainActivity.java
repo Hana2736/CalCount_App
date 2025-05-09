@@ -42,21 +42,25 @@ public class MainActivity extends AppCompatActivity {
         Button overviewBtn = findViewById(R.id.overviewPageBtn);
         overviewBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, OverviewPage.class);
+            new OverviewPage().onCreate(savedInstanceState);
             startActivity(intent);
         });
         Button dailyHistoryBtn = findViewById(R.id.dailyhistoryPageBtn);
         dailyHistoryBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, DailyHistoryPage.class);
+            new DailyHistoryPage().onCreate(savedInstanceState);;
             startActivity(intent);
         });
         Button customFoodsBtn = findViewById(R.id.customfoodsPageBtn);
         customFoodsBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, CustomFoodsActivity.class);
+            new CustomFoodsActivity().onCreate(savedInstanceState);;
             startActivity(intent);
         });
         Button settingsBtn = findViewById(R.id.settingsPageBtn);
         settingsBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, SettingsPage.class);
+            new SettingsPage().onCreate(savedInstanceState);
             startActivity(intent);
         });
 

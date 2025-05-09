@@ -1,0 +1,204 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": false,
+    "cutTests": false,
+    "cutClient": false,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": false,
+    "cutConstructors": false
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "macromasters.calcount.MainActivity",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_180125183 { 
+   	label=calcount
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   CustomFoodsActivity2075058378[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)CustomFoodsActivity</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   mealType: String[] [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   mealTypeSpinner: Spinner [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   selectDay: String[] [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   selectDaySpinner: Spinner [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   selectedDay: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   selectedMealType: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># onCreate(savedInstanceState: Bundle)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+DailyHistoryPage2075058378[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DailyHistoryPage</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># onCreate(savedInstanceState: Bundle)</TD></TR>
+<TR><TD ALIGN="LEFT" ># onResume()</TD></TR>
+<TR><TD ALIGN="LEFT" >- populateHistory()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+DataContainer2075058378[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DataContainer</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ LoadData(ctx: Context)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ SaveData(ctx: Context)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ clearData(ctx: Context)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ mealTypeToString(mealType: MealType): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setup()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ sort()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MainActivity2075058378[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MainActivity</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># onCreate(savedInstanceState: Bundle)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+OverviewPage2075058378[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)OverviewPage</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># onCreate(savedInstanceState: Bundle)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+SettingsPage2075058378[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SettingsPage</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   calorieGoalInput: EditText [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   customFoodBtn: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   dailyHistoryBtn: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   eraseHistory: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   languageButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   notificationsGroup: RadioGroup [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   notificationsOff: RadioButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   notificationsOn: RadioButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   overviewBtn: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   sharedPreferences: SharedPreferences [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- eraseAllSettings()</TD></TR>
+<TR><TD ALIGN="LEFT" >- loadSettings()</TD></TR>
+<TR><TD ALIGN="LEFT" ># onCreate(savedInstanceState: Bundle)</TD></TR>
+<TR><TD ALIGN="LEFT" ># onPause()</TD></TR>
+<TR><TD ALIGN="LEFT" ># onStart()</TD></TR>
+<TR><TD ALIGN="LEFT" >- saveCalorieGoal(goal: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >- saveNotificationsSetting(enabled: boolean)</TD></TR>
+<TR><TD ALIGN="LEFT" >- showCalorieInputDialog()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+'edges    
+MainActivity2075058378 -> CustomFoodsActivity2075058378[label="onCreate() -> onCreate()"];
+MainActivity2075058378 -> DailyHistoryPage2075058378[label="onCreate() -> onCreate()"];
+MainActivity2075058378 -> OverviewPage2075058378[label="onCreate() -> onCreate()"];
+MainActivity2075058378 -> SettingsPage2075058378[label="onCreate() -> onCreate()"];
+    
+}
+@enduml
